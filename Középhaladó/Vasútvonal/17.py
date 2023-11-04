@@ -1,49 +1,34 @@
-n,m = [int(i) for i in input().split()]
-l = [0]
-q = [0,0]
-a = [[0,0]]
-b = []
-for i in range(1,n+1):
-    x,y = [int(j) for j in input().split()]
-    l.append(l[i-1]+y-x)
+def kulonb(l):
+    return l[1] - l[0]
 
+def main():
+    n,m = [int(i) for i in input().split()]
+    fl = [False]*(n+1)
+    q = [0,0]
+    a = [[0,0]]
+    u = [0]
+    e = 0
+    for i in range(1,n+1):
+        x,y = [int(j) for j in input().split()]
+        e += y-x
+        if e >= m:
+            fl[i] = True
 
-#if l.count(m) >= 1:
-#    h = l.index(m)
-#    q[0] = h
-#    while l[h] == m:
-#        h += 1
-#    q[1] = h
+    c = 0
+    for k in fl:
+        if k:
+            q[0] = c
+            while fl[c]:
+                c += 1
+            q[1] = c
+            if c not in u:
+                u.append(c)
+                a.append([q[0],q[1]])
+        else:
+            c += 1
 
-for c in l:
-    if c >= m:
-        h = l.index(c)
-        q[0] = h
-        while l[h] >= m:
-            h += 1
-        q[1] = h
-        if max(a)[-1] != q[1]:
-            a.append([q[0],q[1]])
-            b.append(c)
+    b = map(kulonb, a)
+    b = list(b)
 
-print(l)
-#print(l.count(m))
-print(a)
-
-#if l.count(m) >= 1:
-#    h = l.index(m)
-#    q[0] = h
-#    while l[h] == m:
-#        h += 1
-#    q[1] = h
-
-# for c in l:
-#     if c >= m:
-#         h = l.index(c)
-#         q[0] = h
-#         while l[h] >= m:
-#             h += 1
-#         q[1] = h
-#         if max(a)[-1] != q[1]:
-#             a.append([q[0],q[1]])
-#             b.append(c)
+    print(*a[b.index(max(b))])
+main()
